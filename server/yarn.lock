@@ -1051,6 +1051,11 @@ graphql@^14.5.3:
   dependencies:
     iterall "^1.2.2"
 
+graphql@^15.0.0-rc.2:
+  version "15.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.0.0-rc.2.tgz#6549e52e5415ac08900c432b22d34500c0c3635f"
+  integrity sha512-X9ZybETBiZ5zndyXm/Yn3dd0nJqiCNZ7w06lnd0zMiCtBR/KQGgxJmnf47Y/P/Fy7JXM4QDF+MeeoH724yc3DQ==
+
 has-flag@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"

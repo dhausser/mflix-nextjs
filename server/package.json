@@ -2,31 +2,16 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon -r esm src/index.js",
-    "start": "node -r esm src/index.js",
-    "test": "jest --passWithNoTests",
-    "test:watch": "jest --passWithNoTests --watch",
-    "changestream:update": "node test/lessons/change-updates.js",
-    "changestream:insert": "node test/lessons/change-insert.js"
+    "dev": "nodemon -r esm",
+    "start": "node -r esm"
   },
-  "lint-staged": {
-    "linters": {
-      "*.js": [
-        "prettier --write",
-        "eslint --fix",
-        "npm test",
-        "git add"
-      ]
-    },
-    "ignore": [
-      "**/build/**",
-      "**/data/**"
-    ]
-  },
-  "keywords": [],
-  "author": "",
+  "author": "Davy Hausser <davy.hausser@gmail.com>",
+  "keywords": [
+    "mongodb",
+    "graphql"
+  ],
   "license": "ISC",
   "dependencies": {
     "apollo-server-express": "^2.10.1",
@@ -37,6 +22,7 @@
     "dotenv": "^8.2.0",
     "esm": "^3.2.25",
     "express": "^4.16.3",
+    "graphql": "^15.0.0-rc.2",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.4"
   },
