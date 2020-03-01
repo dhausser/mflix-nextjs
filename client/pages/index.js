@@ -21,40 +21,51 @@ function Home() {
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
   return (
-  <div className="container">
-    <Head>
-      <title>Mflix Next</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+    <div className="container">
+      <Head>
+        <title>Mflix Next</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-    <main>
-      <h1 className="title">
-        Mflix with Next.js!
-      </h1>
+      <main>
+        <h1 className="title">
+          Mflix with Next.js!
+        </h1>
 
-      <div className="grid">
-        {data.movies.map(movie => 
-        <Link key={movie._id} href="/movie/[id]" as={`/movie/${movie._id}`}>
-          <a href="/" className="card">
-            <h3>{movie.title} &rarr;</h3>
-            <p>Year {movie.year}</p>
-          </a>
-        </Link>
+        <div className="grid">
+          {data.movies.map(movie => (
+            <Link key={movie._id} href="/movie/[id]" as={`/movie/${movie._id}`}>
+              <a href="/" className="card">
+                <h3>
+                  {movie.title}
+                  {' '}
+                  &rarr;
+                </h3>
+                <p>
+                  Year
+                  {movie.year}
+                </p>
+              </a>
+            </Link>
+      )
         )}
-      </div>
-    </main>
+        </div>
+      </main>
 
-    <footer>
-      <a
-        href="https://zeit.co?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
-      </a>
-    </footer>
+      <footer>
+        <a
+          href="https://zeit.co?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Powered by 
+          {' '}
+          <img src="/zeit.svg" alt="ZEIT Logo" />
+        </a>
+      </footer>
 
-    <style jsx>{`
+      <style jsx>
+        {`
       .container {
         min-height: 100vh;
         padding: 0 0.5rem;
@@ -179,9 +190,12 @@ function Home() {
           flex-direction: column;
         }
       }
-    `}</style>
+    `}
 
-    <style jsx global>{`
+      </style>
+
+      <style jsx global>
+        {`
       html,
       body {
         padding: 0;
@@ -193,8 +207,10 @@ function Home() {
       * {
         box-sizing: border-box;
       }
-    `}</style>
-  </div>
+    `}
+
+      </style>
+    </div>
 )}
 
 export default Home

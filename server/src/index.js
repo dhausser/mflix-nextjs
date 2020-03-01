@@ -1,10 +1,8 @@
-import app from "./server"
 import { MongoClient } from "mongodb"
+import app, { server } from "./server"
 import MoviesDAO from "./dao/moviesDAO"
 import UsersDAO from "./dao/usersDAO"
 import CommentsDAO from "./dao/commentsDAO"
-
-const port = process.env.PORT || 8000
 
 /**
 Ticket: Connection Pooling
@@ -41,7 +39,7 @@ MongoClient.connect(
     await MoviesDAO.injectDB(client)
     await UsersDAO.injectDB(client)
     await CommentsDAO.injectDB(client)
-    app.listen(port, () => {
-      console.log(`listening on port ${port}`)
-    })
+    app.listen({ port: 4000 }, () =>
+      console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+    ) 
   })

@@ -4,7 +4,7 @@ export default class MoviesController {
   static async apiGetMovies(req, res, next) {
     const MOVIES_PER_PAGE = 20
     const { moviesList, totalNumMovies } = await MoviesDAO.getMovies()
-    let response = {
+    const response = {
       movies: moviesList,
       page: 0,
       filters: {},
@@ -15,11 +15,11 @@ export default class MoviesController {
   }
 
   static async apiGetMoviesByCountry(req, res, next) {
-    let countries = Array.isArray(req.query.countries)
+    const countries = Array.isArray(req.query.countries)
       ? req.query.countries
       : Array(req.query.countries)
-    let moviesList = await MoviesDAO.getMoviesByCountry(countries)
-    let response = {
+    const moviesList = await MoviesDAO.getMoviesByCountry(countries)
+    const response = {
       titles: moviesList,
     }
     res.json(response)
@@ -27,14 +27,14 @@ export default class MoviesController {
 
   static async apiGetMovieById(req, res, next) {
     try {
-      let id = req.params.id || {}
-      let movie = await MoviesDAO.getMovieByID(id)
+      const id = req.params.id || {}
+      const movie = await MoviesDAO.getMovieByID(id)
       if (!movie) {
         res.status(404).json({ error: "Not found" })
         return
       }
-      let updated_type = movie.lastupdated instanceof Date ? "Date" : "other"
-      res.json({ movie, updated_type })
+      const updatedType = movie.lastupdated instanceof Date ? "Date" : "other"
+      res.json({ movie, updatedType })
     } catch (e) {
       console.log(`api, ${e}`)
       res.status(500).json({ error: e })
@@ -57,7 +57,7 @@ export default class MoviesController {
       console.error(`No search keys specified: ${e}`)
     }
 
-    let filters = {}
+    const filters = {}
 
     switch (searchType) {
       case "genre":
@@ -79,9 +79,9 @@ export default class MoviesController {
       MOVIES_PER_PAGE,
     })
 
-    let response = {
+    const response = {
       movies: moviesList,
-      page: page,
+      page,
       filters,
       entries_per_page: MOVIES_PER_PAGE,
       total_results: totalNumMovies,
@@ -113,13 +113,13 @@ export default class MoviesController {
       MOVIES_PER_PAGE,
     })
 
-    let response = {
+    const response = {
       movies: facetedSearchResult.movies,
       facets: {
         runtime: facetedSearchResult.runtime,
         rating: facetedSearchResult.rating,
       },
-      page: page,
+      page,
       filters,
       entries_per_page: MOVIES_PER_PAGE,
       total_results: facetedSearchResult.count,
@@ -131,7 +131,7 @@ export default class MoviesController {
   static async getConfig(req, res, next) {
     const { poolSize, wtimeout, authInfo } = await MoviesDAO.getConfiguration()
     try {
-      let response = {
+      const response = {
         pool_size: poolSize,
         wtimeout,
         ...authInfo,

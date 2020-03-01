@@ -11,12 +11,15 @@ export class User {
     this.password = password
     this.preferences = preferences
   }
+
   toJson() {
     return { name: this.name, email: this.email, preferences: this.preferences }
   }
+
   async comparePassword(plainText) {
     return await bcrypt.compare(plainText, this.password)
   }
+
   encoded() {
     return jwt.sign(
       {
@@ -26,6 +29,7 @@ export class User {
       process.env.SECRET_KEY,
     )
   }
+
   static async decoded(userJwt) {
     return jwt.verify(userJwt, process.env.SECRET_KEY, (error, res) => {
       if (error) {
@@ -40,7 +44,7 @@ export default class UserController {
   static async register(req, res) {
     try {
       const userFromBody = req.body
-      let errors = {}
+      const errors = {}
       if (userFromBody && userFromBody.password.length < 8) {
         errors.password = "Your password must be at least 8 characters."
       }
@@ -94,7 +98,7 @@ export default class UserController {
         res.status(400).json({ error: "Bad password format, expected string." })
         return
       }
-      let userData = await UsersDAO.getUser(email)
+      const userData = await UsersDAO.getUser(email)
       if (!userData) {
         res.status(401).json({ error: "Make sure your email is correct." })
         return
@@ -114,7 +118,7 @@ export default class UserController {
       res.json({ auth_token: user.encoded(), info: user.toJson() })
     } catch (e) {
       res.status(400).json({ error: e })
-      return
+      
     }
   }
 
@@ -141,7 +145,7 @@ export default class UserController {
 
   static async delete(req, res) {
     try {
-      let { password } = req.body
+      const { password } = req.body
       if (!password || typeof password !== "string") {
         res.status(400).json({ error: "Bad password format, expected string." })
         return
@@ -174,7 +178,7 @@ export default class UserController {
     try {
       const userJwt = req.get("Authorization").slice("Bearer ".length)
       const userFromHeader = await User.decoded(userJwt)
-      var { error } = userFromHeader
+      const { error } = userFromHeader
       if (error) {
         res.status(401).json({ error })
         return
@@ -200,7 +204,7 @@ export default class UserController {
   static async createAdminUser(req, res) {
     try {
       const userFromBody = req.body
-      let errors = {}
+      const errors = {}
       if (userFromBody && userFromBody.password.length < 8) {
         errors.password = "Your password must be at least 8 characters."
       }
