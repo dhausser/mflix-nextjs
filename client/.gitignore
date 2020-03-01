@@ -19,6 +19,8 @@
 .DS_Store
 .env*
 .next
+node_modules
+out
 
 # debug
 npm-debug.log*
