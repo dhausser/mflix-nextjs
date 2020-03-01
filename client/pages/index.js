@@ -1,49 +1,46 @@
+// This page doesn't define `getInitialProps`.
+// Next.js will export the page to HTML at build time with the loading state
+// When the page is loaded in the browser SWR will fetch the data
+// Using the defined fetcher function
 import Head from 'next/head'
+import Link from 'next/link'
+import fetch from 'unfetch'
+import useSWR from 'swr'
 
-const Home = () => (
+const API_URL = process.env.NODE_ENV === 'production' ? '/api/v1' : 'http://localhost:5000/api/v1'
+console.log(API_URL)
+export async function fetcher(path) {
+  const res = await fetch(API_URL + path)
+  const json = await res.json()
+  return json
+}
+
+function Home() {
+  const { data, error } = useSWR('/movies', fetcher)
+
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+  return (
   <div className="container">
     <Head>
-      <title>Create Next App</title>
+      <title>Mflix Next</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
     <main>
       <h1 className="title">
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
+        Mflix with Next.js!
       </h1>
 
-      <p className="description">
-        Get started by editing <code>pages/index.js</code>
-      </p>
-
       <div className="grid">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Learn &rarr;</h3>
-          <p>Learn about Next.js in an interactive course with quizzes!</p>
-        </a>
-
-        <a
-          href="https://github.com/zeit/next.js/tree/master/examples"
-          className="card"
-        >
-          <h3>Examples &rarr;</h3>
-          <p>Discover and deploy boilerplate example Next.js projects.</p>
-        </a>
-
-        <a
-          href="https://zeit.co/new?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className="card"
-        >
-          <h3>Deploy &rarr;</h3>
-          <p>
-            Instantly deploy your Next.js site to a public URL with ZEIT Now.
-          </p>
-        </a>
+        {data.movies.map(movie => 
+        <Link key={movie._id} href="/movie/[id]" as={`/movie/${movie._id}`}>
+          <a href="/" className="card">
+            <h3>{movie.title} &rarr;</h3>
+            <p>Year {movie.year}</p>
+          </a>
+        </Link>
+        )}
       </div>
     </main>
 
@@ -142,7 +139,7 @@ const Home = () => (
         justify-content: center;
         flex-wrap: wrap;
 
-        max-width: 800px;
+        max-width: 1200px;
         margin-top: 3rem;
       }
 
@@ -198,6 +195,6 @@ const Home = () => (
       }
     `}</style>
   </div>
-)
+)}
 
 export default Home
