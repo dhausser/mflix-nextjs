@@ -1,28 +1,29 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# build output
+dist
+.next
 
 # dependencies
 node_modules
-/.pnp
-.pnp.js
+package-lock.json
+yarn.lock
+!/yarn.lock
+test/node_modules
 
-# testing
-/coverage
+# logs & pids
+*.log
+pids
 
-# next.js
-.next
-out
-lib
-dist
+# coverage
+.nyc_output
+coverage
 
-# production
-/build
-
-# misc
+# test output
+test/**/out*
+test/**/next-env.d.ts
 .DS_Store
-.env*
-.next
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Editors
+**/.idea
+
+# example output
+examples/**/out

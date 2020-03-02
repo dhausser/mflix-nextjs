@@ -46,14 +46,17 @@ export const typeDefs = gql`
 
   type Query {
     movies: [Movie]
+    movie(id: ID!): Movie
   }
-`;
+`
 
 export const resolvers = {
   Query: {
-    movies: async (_ , __, { dataSources }) => {
+    movies: async (_, __, { dataSources }) => {
       const { moviesList } = await dataSources.MoviesDAO.getMovies()
       return moviesList
     },
+    movie: async (_, { id }, { dataSources }) =>
+      dataSources.MoviesDAO.getMovieByID(id),
   },
-};
+}

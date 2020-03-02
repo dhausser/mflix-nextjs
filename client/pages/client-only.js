@@ -2,19 +2,9 @@ import Link from 'next/link'
 import App from '../components/App'
 import { withApollo } from '../lib/apollo'
 import { useQuery, gql } from '@apollo/client'
+import { GET_MOVIES } from '.'
 
-export const GET_MOVIES = gql`
-  query GetMovies {
-    movies {
-      _id
-      title
-      year
-      rated
-    }
-  }
-`
-
-const IndexPage = () => {
+export const ClientOnlyPage = () => {
   const { loading, error, data } = useQuery(GET_MOVIES)
 
   if (loading || !data) return <p>Loading...</p>
@@ -22,7 +12,7 @@ const IndexPage = () => {
 
   return (
     <App>
-      <h1>Movies SSR</h1>
+      <h1>Movies Client Only</h1>
       <ul>
         {data?.movies.map(movie => (
           <li key={movie._id}>
@@ -38,4 +28,4 @@ const IndexPage = () => {
   )
 }
 
-export default withApollo({ ssr: true })(IndexPage)
+export default withApollo()(ClientOnlyPage)
